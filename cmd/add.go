@@ -16,19 +16,17 @@ var task_cli_add = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(args[0])
 
-		tasktable.TaskList = append(tasktable.TaskList, Task{
+		tasktable.TaskList[tasktable.CurrentID] = Task{
 			ID:       tasktable.CurrentID,
 			Desc:     args[0],
-			Status:   StatusMAP["TODO"],
-			CreateAt: time.Now().Format("2006-01-02 15:04:05"),
-			UpdateAT: time.Now().Format("2006-01-02 15:04:05"),
-		})
-
-		tasktable.CurrentID += 1
-		fmt.Println("1")
-		for _, v := range tasktable.TaskList {
-			fmt.Println(v)
+			Status:   TODO,
+			CreateAt: time.Now().Format(TIME_LAYOUT),
+			UpdateAT: time.Now().Format(TIME_LAYOUT),
 		}
+
+		tasktable.CurrentID++
+
+		fmt.Println(tasktable)
 	},
 }
 
