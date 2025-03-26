@@ -14,7 +14,6 @@ var task_cli_add = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Long:  `add a task with a line of description`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(args[0])
 
 		tasktable.TaskList[tasktable.CurrentID] = Task{
 			ID:       tasktable.CurrentID,
@@ -23,10 +22,9 @@ var task_cli_add = &cobra.Command{
 			CreateAt: time.Now().Format(TIME_LAYOUT),
 			UpdateAT: time.Now().Format(TIME_LAYOUT),
 		}
-
+		fmt.Printf("Task (ID : %d ) has added successfully\n", tasktable.CurrentID)
 		tasktable.CurrentID++
 
-		fmt.Println(tasktable)
 	},
 }
 

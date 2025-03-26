@@ -15,7 +15,7 @@ const (
 )
 
 type Task struct {
-	ID int `json:"id":`
+	ID int `json:"id"`
 
 	Desc string `json:"description"`
 
@@ -26,18 +26,21 @@ type Task struct {
 	UpdateAT string `json:"updateAt"`
 }
 
-var TIME_LAYOUT = "2006-01-02 15:04:05"
-
-var StatusMAP = map[string]TaskStatus{
-	"DONE": DONE,
-	"done": DONE,
-
-	"in-progress": IN_PROGRESS,
-	"INPROGRESS":  IN_PROGRESS,
-
-	"todo": TODO,
-	"TODO": TODO,
+func (t Task) String() string {
+	return fmt.Sprintf("|%-6d|%-10s|%-15s|%-20s|%-20s|\n", t.ID, t.Status.String(), t.Desc, t.CreateAt, t.UpdateAT)
 }
+
+var StatusMAP = map[TaskStatus]string{
+	DONE:        "DONE",
+	IN_PROGRESS: "IN-PROGRESS",
+	TODO:        "TODO",
+}
+
+func (T TaskStatus) String() string {
+	return StatusMAP[T]
+}
+
+var TIME_LAYOUT = "2006-01-02 15:04:05"
 
 type TaskTable struct {
 	TaskList  map[int]Task `json:"tasklist"`
@@ -67,7 +70,9 @@ func LoadFromJson(filename string) error {
 	if err != nil {
 		panic(err)
 	}
-
+	if len(data) <= 0 {
+		return nil
+	}
 	return json.Unmarshal(data, &tasktable)
 
 }

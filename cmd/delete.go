@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -17,9 +18,12 @@ var task_cli_delete = &cobra.Command{
 		if id == 0 && len(args) > 0 {
 			id, _ = strconv.Atoi(args[0])
 		}
-
+		if _, ex := tasktable.TaskList[id]; !ex {
+			fmt.Println("ERROR : Task ID not exist!")
+			return
+		}
 		delete(tasktable.TaskList, id)
-
+		fmt.Printf("TASK (ID : %d) has been deleted \n", id)
 	},
 }
 

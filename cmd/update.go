@@ -29,7 +29,7 @@ var task_cli_update = &cobra.Command{
 		}
 
 		if _, ex := tasktable.TaskList[id]; !ex {
-			fmt.Println("task id not exist")
+			fmt.Println("ERROR: Task id not exist !")
 			return
 		}
 
@@ -38,7 +38,7 @@ var task_cli_update = &cobra.Command{
 		entry.UpdateAT = time.Now().Format(TIME_LAYOUT)
 
 		tasktable.TaskList[id] = entry
-
+		fmt.Printf("Task (ID: %d) has been updated successfully\n", id)
 	},
 }
 
